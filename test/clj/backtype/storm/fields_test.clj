@@ -1,10 +1,15 @@
 (ns backtype.storm.fields-test
   (:use [clojure test])
   (:import [backtype.storm.tuple Fields])
+  (:import [java.io Serializable])
   (:import [java.util List])
   (:import [java.util Iterator]))
 
 (deftest test-fields-constructor
+  (testing "interfaces"
+    (let [fields (Fields. '())]
+      (is (instance? Iterable fields))
+      (is (instance? Serializable fields))))
   (testing "constructor"
     (testing "with (String... fields)"
       (is (instance? Fields (Fields. (into-array String '("foo" "bar")))))
